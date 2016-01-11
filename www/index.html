@@ -25,9 +25,16 @@
 
     <ion-pane>
       <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
+        <h1 class="title">Mathew's Ionic Weather App</h1>
       </ion-header-bar>
-      <ion-content>
+      <ion-content ng-controller="weatherCtrl as weather">
+        <div class="row">
+          <div class="col col-50 col-offset-25">
+            <h1>{{weather.tem}}℉</h1>
+            <h1 class="icon ion-ios-sunny"></h1>
+            <img src="http://lorempixel.com/400/400">
+          </div>
+        </div>
       </ion-content>
     </ion-pane>
   </body>

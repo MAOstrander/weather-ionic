@@ -22,3 +22,20 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+.controller('weatherCtrl', function(){
+  this.tem = 18;
+});
+
+// .config(function ($stateProvider, $urlRouterProvider) {
+
+//   // setup an abstract state for the tabs directive
+//   $stateProvider.state('root', {
+//     url: '/hoi',
+//     // abstract: true,
+//     template: '<h1>HOI, Im TESTING!</h1>'
+//   })
+
+
+//   $urlRouterProvider.otherwise('/');
+// })
