@@ -15,6 +15,70 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
+.captioned {
+  font-weight: bold;
+  text-align: center; }
+
+.temp-box {
+  font-size: 86px;
+  line-height: 2em;
+  font-weight: bold;
+  text-align: center; }
+
+.clear-day {
+  background-image: url(../img/SVG/2.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 280px; }
+
+.clear-night {
+  background-image: url(../img/SVG/3.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 280px; }
+
+.rain {
+  background-image: url(../img/SVG/18.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 280px; }
+
+.snow {
+  background-image: url(../img/SVG/7.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 280px; }
+
+.sleet {
+  background-image: url(../img/SVG/24.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 280px; }
+
+.wind {
+  background-image: url(../img/SVG/6.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 280px; }
+
+.fog {
+  background-image: url(../img/SVG/12.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 280px; }
+
+.partly-cloudy-day {
+  background-image: url(../img/SVG/8.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 280px; }
+
+.partly-cloudy-night {
+  background-image: url(../img/SVG/9.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 280px; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

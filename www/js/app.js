@@ -23,8 +23,39 @@ angular.module('starter', ['ionic'])
   });
 })
 
-.controller('weatherCtrl', function(){
-  this.tem = 18;
+//Example URL: https://api.forecast.io/forecast/93979ef636de57ce99f4f3f94a2a48d3/37.8267,-122.423
+//API Key: 93979ef636de57ce99f4f3f94a2a48d3
+.controller('weatherCtrl', function ($http) {
+  var weather = this;
+  weather.tem = '--';
+  weather.desc = 'loading...';
+  function getWeather(){
+    navigator.geolocation.getCurrentPosition(function(geopos){
+      console.log(geopos);
+      var matlat = geopos.coords.latitude;
+      var matlong = geopos.coords.longitude;
+      var apiKey = '93979ef636de57ce99f4f3f94a2a48d3'
+      var url = 'api/forecast/' + apiKey + '/' + matlat + ',' + matlong;
+      console.log("url", url);
+
+      $http.get(url).then(function(res){
+        console.log(res);
+        console.log(res.data.currently.temperature);
+        console.log(res.data.currently.icon);
+        console.log(res.data.currently.summary);
+
+        weather.tem = Math.round(res.data.currently.temperature);
+        weather.icon = res.data.currently.icon;
+        weather.desc = res.data.currently.summary;
+      })
+    });
+  };
+  getWeather();
+
+  weather.updateThis = function() {
+    console.log("Hold on, updating things...");
+    getWeather();
+  };
 });
 
 // .config(function ($stateProvider, $urlRouterProvider) {
