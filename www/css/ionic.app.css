@@ -15,13 +15,16 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
-body {
+body, p {
   font-weight: bold;
   text-align: center; }
 
+h3 {
+  margin-top: 5px; }
+
 .temp-box {
-  font-size: 86px;
-  line-height: 2em;
+  font-size: 72px;
+  line-height: 1.5em;
   font-weight: bold;
   text-align: center; }
 

@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+angular.module('starter', ['ionic', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -37,6 +37,14 @@ angular.module('starter', ['ionic'])
   weather.desc = 'loading...';
   weather.icon = "img/SVG/45.svg";
 
+  function displayWeather(res){
+    console.log(res);
+    weather.tem = res.data.current_observation.temp_f;
+    weather.icon = res.data.current_observation.icon_url;
+    weather.desc = res.data.current_observation.weather;
+    weather.place = res.data.current_observation.display_location.city;
+  }
+
   $http.get("http://api.wunderground.com/api/e5ae907f4371ad20/geolookup/q/autoip.json").then(function(firstRes){
     console.log(firstRes);
     weather.place = "Weather in: " + firstRes.data.location.city;
@@ -46,11 +54,7 @@ angular.module('starter', ['ionic'])
   var roughUrl = 'http://api.wunderground.com/api/' + apiKey + '/conditions/q/' + initLat + ',' + initLong +".json";
     console.log("url", roughUrl);
 
-    $http.get(roughUrl).then(function(Initres){
-      weather.tem = Initres.data.current_observation.temp_f;
-      weather.icon = Initres.data.current_observation.icon_url;
-      weather.desc = Initres.data.current_observation.weather;
-    })
+    $http.get(roughUrl).then(displayWeather)
   })
 
   function getWeather(){
@@ -65,20 +69,11 @@ angular.module('starter', ['ionic'])
       // console.log("url", url);
       //Weather Underground
       
-      var url = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast/q/' + matlat + ',' + matlong +".json";
+      var url = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast10day/q/' + matlat + ',' + matlong +".json";
       console.log("url", url);
 
       //Break this function out to make my code more DRY
-      $http.get(url).then(function(res){
-        console.log(res);
-        console.log(res.data.current_observation.temp_f);
-        console.log(res.data.current_observation.icon_url);
-        console.log(res.data.current_observation.weather);
-
-        weather.tem = res.data.current_observation.temp_f;
-        weather.icon = res.data.current_observation.icon_url;
-        weather.desc = res.data.current_observation.weather;
-      })
+      $http.get(url).then(displayWeather);
     });
   };
   getWeather();
@@ -87,6 +82,12 @@ angular.module('starter', ['ionic'])
     console.log("Hold on, updating things...");
     getWeather();
   };
+
+  weather.searchZip = function(typedZip) {
+    console.log("typedZip", typedZip);
+    var zipUrl = "http://api.wunderground.com/api/e5ae907f4371ad20/conditions/q/"+typedZip+".json";
+    $http.get(zipUrl).then(displayWeather);
+  }
 });
 
 // .config(function ($stateProvider, $urlRouterProvider) {
