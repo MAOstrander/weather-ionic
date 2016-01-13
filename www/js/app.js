@@ -22,20 +22,21 @@ angular.module('starter', ['ionic', 'ngCordova'])
     }
   });
 })
-//Old with Forecast.io
-//Example URL: https://api.forecast.io/forecast/93979ef636de57ce99f4f3f94a2a48d3/37.8267,-122.423
-//API Key: 93979ef636de57ce99f4f3f94a2a48d3
 
-//Weather Underground
-//e5ae907f4371ad20
-//http://api.wunderground.com/api/e5ae907f4371ad20/conditions/q/37.776289,-122.395234.json
 .controller('weatherCtrl', function ($http, $cordovaGeolocation) {
   var apiKey = 'e5ae907f4371ad20';
+  var baseUrl = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast10day/q/'
   var weather = this;
   weather.place = "Trying to find you..."
   weather.tem = '--';
   weather.desc = 'loading...';
   weather.icon = "img/SVG/45.svg";
+  if (JSON.parse(localStorage.getItem("searchHistory"))) {
+    var storedSearches = JSON.parse(localStorage.getItem("searchHistory"));
+  } else {
+    var storedSearches = [];
+  }
+  console.log("TESTING?", storedSearches);
 
   function displayWeather(res){
     console.log(res);
@@ -43,6 +44,8 @@ angular.module('starter', ['ionic', 'ngCordova'])
     weather.icon = res.data.current_observation.icon_url;
     weather.desc = res.data.current_observation.weather;
     weather.place = res.data.current_observation.display_location.city;
+
+    return res;
   }
 
   $http.get("http://api.wunderground.com/api/e5ae907f4371ad20/geolookup/q/autoip.json").then(function(firstRes){
@@ -51,7 +54,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
     var initLat = firstRes.data.location.lat;
     var initLong = firstRes.data.location.lon;
 
-  var roughUrl = 'http://api.wunderground.com/api/' + apiKey + '/conditions/q/' + initLat + ',' + initLong +".json";
+  var roughUrl = baseUrl + initLat + ',' + initLong +".json";
     console.log("url", roughUrl);
 
     $http.get(roughUrl).then(displayWeather)
@@ -67,7 +70,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
       // var apiKey = '93979ef636de57ce99f4f3f94a2a48d3'
       // var url = 'api/forecast/' + apiKey + '/' + matlat + ',' + matlong;
       
-      var url = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast10day/q/' + matlat + ',' + matlong +".json";
+      var url = baseUrl + matlat + ',' + matlong +".json";
       console.log("url", url);
       $http.get(url).then(displayWeather);
     });
@@ -79,7 +82,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
       var lat  = position.coords.latitude;
       var lon = position.coords.longitude;
       console.log("Hooray?", lat);
-      var url = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast10day/q/' + lat + ',' + lon +".json";
+      var url = baseUrl + lat + ',' + lon +".json";
       console.log("url", url);
       $http.get(url).then(displayWeather);
     }, function(err) {
@@ -89,7 +92,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
   };
   getWeather();
 
-
   weather.updateThis = function() {
     console.log("Hold on, updating things...");
     getWeather();
@@ -97,8 +99,23 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
   weather.searchZip = function(typedZip) {
     console.log("typedZip", typedZip);
-    var zipUrl = "http://api.wunderground.com/api/e5ae907f4371ad20/conditions/q/"+typedZip+".json";
-    $http.get(zipUrl).then(displayWeather);
+    var zipUrl = baseUrl + typedZip + ".json";
+    $http.get(zipUrl)
+      .then(displayWeather)
+      .then(function(things){
+        console.log("IS IT CHAINING?", things.data.current_observation.station_id);
+        stationUnseen = true;
+        for (var i = 0; i < storedSearches.length; i++) {
+          if (storedSearches[i] === things.data.current_observation.station_id) {
+            stationUnseen = false;
+          }
+        }
+        if (stationUnseen) {
+          storedSearches.push(things.data.current_observation.station_id);
+          localStorage.setItem('searchHistory', JSON.stringify(storedSearches));
+        }
+        // localStorage.setItem('ourData', JSON.stringify(things));
+      });
   }
 });
 
