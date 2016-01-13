@@ -22,9 +22,13 @@ angular.module('starter', ['ionic'])
     }
   });
 })
-
+//Old with Forecast.io
 //Example URL: https://api.forecast.io/forecast/93979ef636de57ce99f4f3f94a2a48d3/37.8267,-122.423
 //API Key: 93979ef636de57ce99f4f3f94a2a48d3
+
+//Weather Underground
+//e5ae907f4371ad20
+//http://api.wunderground.com/api/e5ae907f4371ad20/conditions/q/37.776289,-122.395234.json
 .controller('weatherCtrl', function ($http) {
   var weather = this;
   weather.tem = '--';
@@ -34,17 +38,22 @@ angular.module('starter', ['ionic'])
       console.log(geopos);
       var matlat = geopos.coords.latitude;
       var matlong = geopos.coords.longitude;
-      var apiKey = '93979ef636de57ce99f4f3f94a2a48d3'
-      var url = 'api/forecast/' + apiKey + '/' + matlat + ',' + matlong;
+      //Old with Forecast.io
+      // var apiKey = '93979ef636de57ce99f4f3f94a2a48d3'
+      // var url = 'api/forecast/' + apiKey + '/' + matlat + ',' + matlong;
+      // console.log("url", url);
+      //Weather Underground
+      var apiKey = 'e5ae907f4371ad20'
+      var url = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast/geolookup/q/' + matlat + ',' + matlong +".json";
       console.log("url", url);
 
       $http.get(url).then(function(res){
         console.log(res);
-        console.log(res.data.currently.temperature);
+        console.log(res.data.current_observation.temp_f);
         console.log(res.data.currently.icon);
         console.log(res.data.currently.summary);
 
-        weather.tem = Math.round(res.data.currently.temperature);
+        weather.tem = Math.round(res.data.current_observation.temp_f);
         weather.icon = res.data.currently.icon;
         weather.desc = res.data.currently.summary;
       })
