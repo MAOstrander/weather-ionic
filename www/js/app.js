@@ -29,7 +29,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
 //Weather Underground
 //e5ae907f4371ad20
 //http://api.wunderground.com/api/e5ae907f4371ad20/conditions/q/37.776289,-122.395234.json
-.controller('weatherCtrl', function ($http) {
+.controller('weatherCtrl', function ($http, $cordovaGeolocation) {
   var apiKey = 'e5ae907f4371ad20';
   var weather = this;
   weather.place = "Trying to find you..."
@@ -66,17 +66,29 @@ angular.module('starter', ['ionic', 'ngCordova'])
       //Old with Forecast.io
       // var apiKey = '93979ef636de57ce99f4f3f94a2a48d3'
       // var url = 'api/forecast/' + apiKey + '/' + matlat + ',' + matlong;
-      // console.log("url", url);
-      //Weather Underground
       
       var url = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast10day/q/' + matlat + ',' + matlong +".json";
       console.log("url", url);
-
-      //Break this function out to make my code more DRY
       $http.get(url).then(displayWeather);
     });
+
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position) {
+      var lat  = position.coords.latitude;
+      var lon = position.coords.longitude;
+      console.log("Hooray?", lat);
+      var url = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast10day/q/' + lat + ',' + lon +".json";
+      console.log("url", url);
+      $http.get(url).then(displayWeather);
+    }, function(err) {
+      console.log("Error", err);
+    });
+
   };
   getWeather();
+
 
   weather.updateThis = function() {
     console.log("Hold on, updating things...");
