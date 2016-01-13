@@ -30,10 +30,31 @@ angular.module('starter', ['ionic'])
 //e5ae907f4371ad20
 //http://api.wunderground.com/api/e5ae907f4371ad20/conditions/q/37.776289,-122.395234.json
 .controller('weatherCtrl', function ($http) {
+  var apiKey = 'e5ae907f4371ad20';
   var weather = this;
+  weather.place = "Trying to find you..."
   weather.tem = '--';
   weather.desc = 'loading...';
+  weather.icon = "img/SVG/45.svg";
+
+  $http.get("http://api.wunderground.com/api/e5ae907f4371ad20/geolookup/q/autoip.json").then(function(firstRes){
+    console.log(firstRes);
+    weather.place = "Weather in: " + firstRes.data.location.city;
+    var initLat = firstRes.data.location.lat;
+    var initLong = firstRes.data.location.lon;
+
+  var roughUrl = 'http://api.wunderground.com/api/' + apiKey + '/conditions/q/' + initLat + ',' + initLong +".json";
+    console.log("url", roughUrl);
+
+    $http.get(roughUrl).then(function(Initres){
+      weather.tem = Initres.data.current_observation.temp_f;
+      weather.icon = Initres.data.current_observation.icon_url;
+      weather.desc = Initres.data.current_observation.weather;
+    })
+  })
+
   function getWeather(){
+
     navigator.geolocation.getCurrentPosition(function(geopos){
       console.log(geopos);
       var matlat = geopos.coords.latitude;
@@ -43,10 +64,11 @@ angular.module('starter', ['ionic'])
       // var url = 'api/forecast/' + apiKey + '/' + matlat + ',' + matlong;
       // console.log("url", url);
       //Weather Underground
-      var apiKey = 'e5ae907f4371ad20'
-      var url = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast/geolookup/q/' + matlat + ',' + matlong +".json";
+      
+      var url = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast/q/' + matlat + ',' + matlong +".json";
       console.log("url", url);
 
+      //Break this function out to make my code more DRY
       $http.get(url).then(function(res){
         console.log(res);
         console.log(res.data.current_observation.temp_f);

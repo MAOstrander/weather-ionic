@@ -15,7 +15,7 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
-.captioned {
+body {
   font-weight: bold;
   text-align: center; }
 

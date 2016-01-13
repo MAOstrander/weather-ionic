@@ -30,9 +30,20 @@
       <ion-content ng-controller="weatherCtrl as weather">
         <div class="row">
           <div class="col col-80 col-offset-10">
+            <h3>{{weather.place}}</h3>
+            <div class="list">
+              <div class="item item-input">
+                <label class="item-input-wrapper">
+                  <input type="text" placeholder="Search by Zip">
+                </label>
+                <button class="button button-small">
+                  Search
+                </button>
+              </div>
+            </div>
             <div class="temp-box">{{weather.tem}}℉</div>
-            <div class="img-box ">
-              <img src="{{weather.icon}}" height="280px">
+            <div class="img-box">
+              <img src="{{weather.icon}}" height="240px">
             </div>
             <p class="captioned">The Weather is: {{weather.desc}}</p>
           </div>
