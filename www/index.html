@@ -46,6 +46,7 @@
         <div class="row">
           <div class="col col-80 col-offset-10">
             <div class="temp-box">{{weather.tem}}℉</div>
+            <div>{{weather.hilow}}</div>
             <div class="img-box">
               <img src="{{weather.icon}}" height="240px">
             </div>
@@ -55,6 +56,15 @@
         <button class="button button-block button-dark" ng-click="weather.updateThis()">
           Update Info
         </button>
+
+        <ul class="list">
+          <li class="item item-divider">
+            Search History:
+          </li>
+          <li class="item" ng-repeat="(key, value) in weather.storedSearches">
+            {{key}}
+          </li>
+        </ul>
       </ion-content>
     </ion-pane>
   </body>

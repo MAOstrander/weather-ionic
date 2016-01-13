@@ -31,12 +31,8 @@ angular.module('starter', ['ionic', 'ngCordova'])
   weather.tem = '--';
   weather.desc = 'loading...';
   weather.icon = "img/SVG/45.svg";
-  if (JSON.parse(localStorage.getItem("searchHistory"))) {
-    var storedSearches = JSON.parse(localStorage.getItem("searchHistory"));
-  } else {
-    var storedSearches = [];
-  }
-  console.log("TESTING?", storedSearches);
+  weather.storedSearches = JSON.parse(localStorage.getItem("searchHistory")) || {};
+  console.log("TESTING?", weather.storedSearches);
 
   function displayWeather(res){
     console.log(res);
@@ -45,6 +41,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
     weather.desc = res.data.current_observation.weather;
     weather.place = res.data.current_observation.display_location.city;
 
+    var hi = res.data.forecast.simpleforecast.forecastday[0].high.fahrenheit;
+    var low = res.data.forecast.simpleforecast.forecastday[0].low.fahrenheit;
+    weather.hilow = "Today's High: " + hi + "℉ / Low: " + low;
+
+    console.log("FINDING THE FORECAST", res.data.forecast.simpleforecast.forecastday);
     return res;
   }
 
@@ -103,18 +104,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
     $http.get(zipUrl)
       .then(displayWeather)
       .then(function(things){
-        console.log("IS IT CHAINING?", things.data.current_observation.station_id);
-        stationUnseen = true;
-        for (var i = 0; i < storedSearches.length; i++) {
-          if (storedSearches[i] === things.data.current_observation.station_id) {
-            stationUnseen = false;
-          }
-        }
-        if (stationUnseen) {
-          storedSearches.push(things.data.current_observation.station_id);
-          localStorage.setItem('searchHistory', JSON.stringify(storedSearches));
-        }
-        // localStorage.setItem('ourData', JSON.stringify(things));
+        var searchKEY = things.data.current_observation.display_location.full;
+        var searchVALUE = things.data.current_observation.station_id;
+
+        weather.storedSearches[searchKEY] = searchVALUE;
+        localStorage.setItem('searchHistory', JSON.stringify(weather.storedSearches));
       });
   }
 });
