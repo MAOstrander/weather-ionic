@@ -50,12 +50,12 @@ angular.module('starter', ['ionic'])
       $http.get(url).then(function(res){
         console.log(res);
         console.log(res.data.current_observation.temp_f);
-        console.log(res.data.currently.icon);
-        console.log(res.data.currently.summary);
+        console.log(res.data.current_observation.icon_url);
+        console.log(res.data.current_observation.weather);
 
-        weather.tem = Math.round(res.data.current_observation.temp_f);
-        weather.icon = res.data.currently.icon;
-        weather.desc = res.data.currently.summary;
+        weather.tem = res.data.current_observation.temp_f;
+        weather.icon = res.data.current_observation.icon_url;
+        weather.desc = res.data.current_observation.weather;
       })
     });
   };
