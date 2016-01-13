@@ -24,11 +24,13 @@
   </head>
   <body ng-app="starter">
 
-    <ion-pane>
+    <ion-pane ng-controller="weatherCtrl as weather">
       <ion-header-bar class="bar-stable">
-        <h1 class="title">Mathew's Ionic Weather App</h1>
+        <h1 class="title">Mat's Awesome Weather</h1>
+        <button class="button button-assertive" ng-click="weather.updateThis()">Update</button>
       </ion-header-bar>
-      <ion-content ng-controller="weatherCtrl as weather">
+
+      <ion-content>
 
           <!-- Make this a form -->
           <div class="list">
@@ -50,12 +52,19 @@
             <div class="img-box">
               <img src="{{weather.icon}}" height="240px">
             </div>
-            <p class="captioned">The Weather is: {{weather.desc}}</p>
+            <p 
+            >The Weather is: {{weather.desc}}</p>
           </div>
         </div>
-        <button class="button button-block button-dark" ng-click="weather.updateThis()">
-          Update Info
-        </button>
+
+        <ul class="list">
+          <li class="item item-divider">
+            5 Day Forecast:
+          </li>
+          <li class="item item-icon-left item-icon-right" ng-repeat="day in weather.fiveDay">
+            <img src="{{day.icon_url}}" class="icon"> {{day.conditions}} <span class="icon">{{day.high.fahrenheit}}/{{day.low.fahrenheit}}</span>
+          </li>
+        </ul>
 
         <ul class="list">
           <li class="item item-divider">

@@ -46,6 +46,15 @@ angular.module('starter', ['ionic', 'ngCordova'])
     weather.hilow = "Today's High: " + hi + "℉ / Low: " + low;
 
     console.log("FINDING THE FORECAST", res.data.forecast.simpleforecast.forecastday);
+    weather.fiveDay = {
+    "Day 1": res.data.forecast.simpleforecast.forecastday[1],
+    "Day 2": res.data.forecast.simpleforecast.forecastday[2],
+    "Day 3": res.data.forecast.simpleforecast.forecastday[3],
+    "Day 4": res.data.forecast.simpleforecast.forecastday[4],
+    "Day 5": res.data.forecast.simpleforecast.forecastday[5]
+    };
+    console.log("weather.fiveDay", weather.fiveDay);
+
     return res;
   }
 
