@@ -49,11 +49,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
     console.log("FINDING THE FORECAST", res.data.forecast.simpleforecast.forecastday);
     weather.fiveDay = {
-    "Day 1": res.data.forecast.simpleforecast.forecastday[1],
-    "Day 2": res.data.forecast.simpleforecast.forecastday[2],
-    "Day 3": res.data.forecast.simpleforecast.forecastday[3],
-    "Day 4": res.data.forecast.simpleforecast.forecastday[4],
-    "Day 5": res.data.forecast.simpleforecast.forecastday[5]
+      "Day 1": res.data.forecast.simpleforecast.forecastday[1],
+      "Day 2": res.data.forecast.simpleforecast.forecastday[2],
+      "Day 3": res.data.forecast.simpleforecast.forecastday[3],
+      "Day 4": res.data.forecast.simpleforecast.forecastday[4],
+      "Day 5": res.data.forecast.simpleforecast.forecastday[5]
     };
     console.log("weather.fiveDay", weather.fiveDay);
     weather.loading = false;
@@ -141,15 +141,14 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
 }); // End weatherCtrl Controller
 
-// .config(function ($stateProvider, $urlRouterProvider) {
 
+
+// .config(function ($stateProvider, $urlRouterProvider) {
 //   // setup an abstract state for the tabs directive
 //   $stateProvider.state('root', {
 //     url: '/hoi',
 //     // abstract: true,
 //     template: '<h1>HOI, Im TESTING!</h1>'
 //   })
-
-
 //   $urlRouterProvider.otherwise('/');
 // })

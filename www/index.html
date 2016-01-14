@@ -10,7 +10,7 @@
 
     IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above -->
     <link href="css/ionic.app.css" rel="stylesheet">
-   
+
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -47,7 +47,7 @@
 
         <ion-spinner id="spinny" ng-if="weather.loading===true"></ion-spinner>
         <div ng-if="weather.results===undefined">
-          
+
           <h3>{{weather.place}}</h3>
           <div class="row">
             <div class="col col-80 col-offset-10">
@@ -56,7 +56,7 @@
               <div class="img-box">
                 <img src="{{weather.icon}}" height="240px">
               </div>
-              <p 
+              <p
               >The Weather is: {{weather.desc}}</p>
             </div>
           </div>
@@ -75,7 +75,7 @@
         <div ng-if="weather.results" class="list">
           <ul>
             <li class="item item-divider">
-              Search Results              
+              Search Results
             </li>
             <li class="item" ng-repeat="result in weather.results | filter:'US'" ng-click="weather.searchZip('{{result.city}}, {{result.state}}')">
               {{result.city}}, {{result.state}}
