@@ -9804,3 +9804,7 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.item-divider {
+  height: 45px;
+  padding-top: 11px; }

@@ -27,7 +27,9 @@
     <ion-pane ng-controller="weatherCtrl as weather">
       <ion-header-bar class="bar-stable">
         <h1 class="title">Mat's Awesome Weather</h1>
-        <button class="button button-assertive" ng-click="weather.updateThis()">Update</button>
+        <button class="button button-assertive" ng-click="weather.updateThis()">
+          Update
+        </button>
       </ion-header-bar>
 
       <ion-content>
@@ -82,8 +84,11 @@
         </div>
 
         <ul class="list">
-          <li class="item item-divider">
+          <li class="item item-divider item-button-right">
             Search History:
+            <button id="button-smaller" class="button button-assertive" ng-click="weather.emptyHistory()">
+              Clear
+            </button>
           </li>
           <li class="item" ng-repeat="(key, value) in weather.storedSearches">
             {{key}}

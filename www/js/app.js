@@ -134,6 +134,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
   } //End weather.searchZip function
 
+  weather.emptyHistory = function() {
+    weather.storedSearches = {};
+    localStorage.setItem('searchHistory', JSON.stringify(weather.storedSearches));
+  }
+
 }); // End weatherCtrl Controller
 
 // .config(function ($stateProvider, $urlRouterProvider) {
