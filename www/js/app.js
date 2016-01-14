@@ -27,6 +27,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
   var apiKey = 'e5ae907f4371ad20';
   var baseUrl = 'http://api.wunderground.com/api/' + apiKey + '/conditions/forecast10day/q/'
   var weather = this;
+  weather.loading = true;
   weather.place = "Trying to find you..."
   weather.tem = '--';
   weather.desc = 'loading...';
@@ -54,6 +55,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
     "Day 5": res.data.forecast.simpleforecast.forecastday[5]
     };
     console.log("weather.fiveDay", weather.fiveDay);
+    weather.loading = false;
 
     return res;
   }
@@ -71,7 +73,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
   })
 
   function getWeather(){
-
+    weather.loading = true;
     navigator.geolocation.getCurrentPosition(function(geopos){
       console.log(geopos);
       var matlat = geopos.coords.latitude;
@@ -108,6 +110,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
   };
 
   weather.searchZip = function(typedZip) {
+    weather.loading = true;
     console.log("typedZip", typedZip);
     var zipUrl = baseUrl + typedZip + ".json";
     $http.get(zipUrl)
