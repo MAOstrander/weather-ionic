@@ -32,41 +32,54 @@
 
       <ion-content>
 
-          <!-- Make this a form -->
-          <div class="list">
+          <form class="list" name="zip">
             <div class="item item-input">
               <label class="item-input-wrapper">
-                <input type="text" placeholder="Search by Zip" ng-model="zipsearch">
+                <input type="text" placeholder="Search by Zip" ng-model="zipsearch" required>
               </label>
-              <button class="button button-small" ng-click="weather.searchZip(zipsearch)">
+              <button class="button button-small" ng-disabled="zip.$invalid" ng-click="weather.searchZip(zipsearch)">
                 Search
               </button>
             </div>
-          </div>
+          </form>
 
         <ion-spinner id="spinny" ng-if="weather.loading===true"></ion-spinner>
-
+        <div ng-if="weather.results===undefined">
+          
           <h3>{{weather.place}}</h3>
-        <div class="row">
-          <div class="col col-80 col-offset-10">
-            <div class="temp-box">{{weather.tem}}℉</div>
-            <div>{{weather.hilow}}</div>
-            <div class="img-box">
-              <img src="{{weather.icon}}" height="240px">
+          <div class="row">
+            <div class="col col-80 col-offset-10">
+              <div class="temp-box">{{weather.tem}}℉</div>
+              <div>{{weather.hilow}}</div>
+              <div class="img-box">
+                <img src="{{weather.icon}}" height="240px">
+              </div>
+              <p 
+              >The Weather is: {{weather.desc}}</p>
             </div>
-            <p 
-            >The Weather is: {{weather.desc}}</p>
           </div>
+
+          <ul class="list">
+            <li class="item item-divider">
+              5 Day Forecast:
+            </li>
+            <li class="item item-icon-left item-icon-right" ng-repeat="day in weather.fiveDay">
+              <img src="{{day.icon_url}}" class="icon"> {{day.conditions}} <span class="icon">{{day.high.fahrenheit}}/{{day.low.fahrenheit}}</span>
+            </li>
+          </ul>
+
         </div>
 
-        <ul class="list">
-          <li class="item item-divider">
-            5 Day Forecast:
-          </li>
-          <li class="item item-icon-left item-icon-right" ng-repeat="day in weather.fiveDay">
-            <img src="{{day.icon_url}}" class="icon"> {{day.conditions}} <span class="icon">{{day.high.fahrenheit}}/{{day.low.fahrenheit}}</span>
-          </li>
-        </ul>
+        <div ng-if="weather.results" class="list">
+          <ul>
+            <li class="item item-divider">
+              Search Results              
+            </li>
+            <li class="item" ng-repeat="result in weather.results | filter:'US'" ng-click="weather.searchZip('{{result.city}}, {{result.state}}')">
+              {{result.city}}, {{result.state}}
+            <li>
+          </ul>
+        </div>
 
         <ul class="list">
           <li class="item item-divider">

@@ -32,6 +32,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
   weather.tem = '--';
   weather.desc = 'loading...';
   weather.icon = "img/SVG/45.svg";
+  weather.results = undefined;
   weather.storedSearches = JSON.parse(localStorage.getItem("searchHistory")) || {};
   console.log("TESTING?", weather.storedSearches);
 
@@ -56,7 +57,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
     };
     console.log("weather.fiveDay", weather.fiveDay);
     weather.loading = false;
-
+    
     return res;
   }
 
@@ -110,20 +111,30 @@ angular.module('starter', ['ionic', 'ngCordova'])
   };
 
   weather.searchZip = function(typedZip) {
+    weather.results = undefined;
     weather.loading = true;
     console.log("typedZip", typedZip);
     var zipUrl = baseUrl + typedZip + ".json";
     $http.get(zipUrl)
-      .then(displayWeather)
-      .then(function(things){
-        var searchKEY = things.data.current_observation.display_location.full;
-        var searchVALUE = things.data.current_observation.station_id;
+      .then(function(checkRes){
+        if(checkRes.data.response.results) {
+          weather.results = checkRes.data.response.results;
+          console.log(checkRes.data.response.results);
+          weather.loading = false;
+        } else {
+          displayWeather(checkRes)
+          var searchKEY = checkRes.data.current_observation.display_location.full;
+          var searchVALUE = checkRes.data.current_observation.station_id;
+          weather.storedSearches[searchKEY] = searchVALUE;
+          localStorage.setItem('searchHistory', JSON.stringify(weather.storedSearches));
+          
+        } //End if/else
 
-        weather.storedSearches[searchKEY] = searchVALUE;
-        localStorage.setItem('searchHistory', JSON.stringify(weather.storedSearches));
-      });
-  }
-});
+      }) //End Check for Results .then
+
+  } //End weather.searchZip function
+
+}); // End weatherCtrl Controller
 
 // .config(function ($stateProvider, $urlRouterProvider) {
 

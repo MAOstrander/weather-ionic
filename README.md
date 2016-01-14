@@ -8,6 +8,6 @@ An introductory weather app using ionic
 -4. Search box
 -5. Save Searches
 5.5 Use Search history to store searches in other places
-6. Ionic Loading Spinner
-7. Keyboard Return for searching
-8. Search for Zip or City (Use the response.results to bring a list of suggestions?)
+-6. Ionic Loading Spinner
+-7. Keyboard Return for searching
+-8. Search for Zip or City (Use the response.results to bring a list of suggestions?)
