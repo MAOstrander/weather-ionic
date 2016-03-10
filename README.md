@@ -6,15 +6,26 @@ This was an exercise in mobile development working with Ionic and Cordova to cre
 
 1/12/16 Assignment:
 -1. Switch to the Weather Underground API
+
 -2. Use the geoip weather until we get coords
+
 -3. High/Low of the day, 5 day forecast
+
 -4. Search box
+
 -5. Save Searches
+
+
 Bonus
+
 -B1 Use Search history to store searches in other places
+
 -B2. Ionic Loading Spinner
+
 -B3. Keyboard Return for searching
+
 -B4. Search for Zip or City (Use the response.results to bring a list of suggestions?)
+
 
 ## Requirements
 Since it's an Ionic app, you will need Ionic & Cordova. These only run in Node version 4!
